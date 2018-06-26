@@ -19,3 +19,9 @@ for foreach ($monipdb as $ip => $name) {
     echo "{$ip}: $name\n";
 }
 ```
+
+## 免费下载数据库
+
+需要[注册账号](https://user.ipip.net/register.html)[登录](https://user.ipip.net/login.html)后下载。
+
+下载地址: https://www.ipip.net/free_download/
