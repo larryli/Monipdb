@@ -13,13 +13,9 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
      */
     protected $isDatX;
     /**
-     * @var array
+     * @var string
      */
     protected $data;
-    /**
-     * @var string[]
-     */
-    protected $string;
     /**
      * @var int
      */
@@ -40,6 +36,10 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
      * @var int
      */
     protected $end = 0;
+    /**
+     * @var
+     */
+    protected $func;
 
     /**
      * @param string $path is file path
@@ -57,14 +57,14 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
             throw new \Exception("{$path} fopen failed.");
         }
         if ($this->isDatX) {
-            $func = function ($dat, $n) {
-                return unpack('nlen', $dat[$n + 7] . $dat[$n + 8]);
+            $this->func = function ($n) {
+                return unpack('nlen', $this->data[$n + 7] . $this->data[$n + 8]);
             };
         } else {
             $this->step = 8;
             $this->index = 1024;
-            $func = function ($dat, $n) {
-                return unpack('Clen', $dat[$n + 7]);
+            $this->func = function ($n) {
+                return unpack('Clen', $this->data[$n + 7]);
             };
         }
         $offset = unpack('Nlen', fread($file, 4));
@@ -73,17 +73,8 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
             throw new \Exception("{$path} is invalid.");
         }
         $this->end = $this->offset - 4;
-        $this->data = fread($file, $this->end);
+        $this->data = fread($file, fstat($file)['size'] - 4);
         $this->rewind();
-        $this->string = [];
-        for ($start = $this->index; $start < $this->end; $start += $this->step) {
-            $off = unpack('Vlen', substr($this->data, $start + 4, 3) . "\x0");
-            if (!isset($this->string[$off['len']])) {
-                $len = call_user_func($func, $this->data, $start);
-                fseek($file, $this->offset + $off['len']);
-                $this->string[$off['len']] = fread($file, $len['len']);
-            }
-        }
         fclose($file);
     }
 
@@ -267,6 +258,7 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
     protected function string($start)
     {
         $off = unpack('Vlen', substr($this->data, $start + 4, 3) . "\x0");
-        return isset($this->string[$off['len']]) ? $this->string[$off['len']] : false;
+        $len = call_user_func($this->func, $start);
+        return substr($this->data, $this->offset + $off['len'] - 4, $len['len']);
     }
 }
