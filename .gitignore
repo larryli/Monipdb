@@ -2,4 +2,8 @@
 .idea
 *.dat
 *.datx
+/composer.lock
+/composer.phar
+/html
+/phpunit.phar
 /vendor

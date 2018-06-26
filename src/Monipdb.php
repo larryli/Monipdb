@@ -54,7 +54,9 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
         }
         $file = fopen($path, 'rb');
         if (!is_resource($file)) {
+            // @codeCoverageIgnoreStart
             throw new \Exception("{$path} fopen failed.");
+            // @codeCoverageIgnoreEnd
         }
         if ($this->isDatX) {
             $this->func = function ($n) {
@@ -70,7 +72,9 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
         $offset = unpack('Nlen', fread($file, 4));
         $this->offset = $offset['len'] - $this->index;
         if ($this->offset < 4) {
+            // @codeCoverageIgnoreStart
             throw new \Exception("{$path} is invalid.");
+            // @codeCoverageIgnoreEnd
         }
         $this->end = $this->offset - 4;
         $this->data = fread($file, fstat($file)['size'] - 4);
@@ -183,14 +187,10 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
             return false;
         }
 
-        $ip_start2 = intval(floor($ip / (256 * 256)));
-        $ip_start = intval(floor($ip_start2 / 256));
-        if ($ip_start < 0 || $ip_start > 255) {
-            return false;
-        }
+        $ip_start = intval(floor($ip / (256 * 256)));
 
         $nip = pack('N', $ip);
-        $tmp_offset = ($this->isDatX ? $ip_start2 : $ip_start) * 4;
+        $tmp_offset = ($this->isDatX ? $ip_start : intval(floor($ip_start / 256))) * 4;
         $start = unpack('Vlen', substr($this->data, $tmp_offset, 4));
 
         for ($start = $start['len'] * $this->step + $this->index; $start < $this->end; $start += $this->step) {
@@ -199,7 +199,9 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
                 return $this->string($start);
             }
         }
+        // @codeCoverageIgnoreStart
         return false;
+        // @codeCoverageIgnoreEnd
     }
 
     /**

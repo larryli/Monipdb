@@ -1,0 +1,19 @@
+{
+    "name": "larryli/monipdb",
+    "description": "IP v4 中国城市地址库",
+    "homepage": "https://github.com/larryli/monipdb",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Larry Li",
+        "email": "larryli@qq.com"
+      }
+    ],
+    "require": {
+      "php": ">=5.4"
+    },
+    "autoload": {
+      "psr-4": { "larryli\\monipdb\\": "src" }
+    }
+  }
