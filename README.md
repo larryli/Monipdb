@@ -9,12 +9,15 @@
 
 ## 使用方法
 
+需要 PHP 5.4 以上版本，无其他依赖。
+
 ```shell
 composer require larryli/monipdb
 ```
 
 ```php
 $monipdb = new \larryli\monipdb\Monipdb('17monipdb.datx');
+// or $monipdb = new \larryli\monipdb\Monipdb('17monipdb.dat', false);
 
 // find
 echo "202.103.24.68: {$monipdb['202.103.24.68']}\n";
@@ -24,6 +27,8 @@ for foreach ($monipdb as $ip => $name) {
     echo "{$ip}: $name\n";
 }
 ```
+
+示例请参考 [example](example/monipdb.php) 文件。
 
 ## 免费下载数据库
 
