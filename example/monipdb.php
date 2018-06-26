@@ -25,7 +25,7 @@ $ip = ip2long('202.96.134.133');
 echo "3395323525: {$monipdb[3395323525]}\n";
 
 unset($monipdb);
-
+gc_collect_cycles();
 echo "[MEMORY] Clean: " . memory_get_usage() . "\n";
 
 try {
@@ -48,4 +48,5 @@ echo "202.103.24.68: {$monipdb['202.103.24.68']}\n";
 echo "3395323525: {$monipdb[3395323525]}\n";
 
 unset($monipdb);
+gc_collect_cycles();
 echo "[MEMORY] Clean: " . memory_get_usage() . "\n";

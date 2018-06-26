@@ -74,8 +74,8 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
         }
         $this->end = $this->offset - 4;
         $this->data = fread($file, fstat($file)['size'] - 4);
-        $this->rewind();
         fclose($file);
+        $this->rewind();
     }
 
     /**
