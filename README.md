@@ -2,6 +2,11 @@
 
 使用 PHP 数组式访问 ipip.net 数据库。
 
+[![Latest Stable Version](https://poser.pugx.org/larryli/monipdb/v/stable)](https://packagist.org/packages/larryli/monipdb)
+[![Total Downloads](https://poser.pugx.org/larryli/monipdb/downloads)](https://packagist.org/packages/larryli/monipdb)
+[![Latest Unstable Version](https://poser.pugx.org/larryli/monipdb/v/unstable)](https://packagist.org/packages/larryli/monipdb)
+[![License](https://poser.pugx.org/larryli/monipdb/license)](https://packagist.org/packages/larryli/monipdb)
+
 ## 使用方法
 
 ```shell
