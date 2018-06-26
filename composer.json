@@ -1,6 +1,6 @@
 {
     "name": "larryli/monipdb",
-    "description": "IP v4 中国城市地址库",
+    "description": "使用 PHP 数组式访问 ipip.net 数据库。",
     "homepage": "https://github.com/larryli/monipdb",
     "minimum-stability": "stable",
     "license": "MIT",
@@ -9,6 +9,11 @@
         "name": "Larry Li",
         "email": "larryli@qq.com"
       }
+    ],
+    "keywords": [
+      "ip",
+      "ipip",
+      "17monipdb"
     ],
     "require": {
       "php": ">=5.4"
