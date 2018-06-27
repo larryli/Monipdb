@@ -2,6 +2,7 @@
 .idea
 *.dat
 *.datx
+*.txt
 /composer.lock
 /composer.phar
 /html
