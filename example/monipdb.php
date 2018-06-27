@@ -1,9 +1,11 @@
 <?php
 
-require(dirname(__DIR__) . '/src/Monipdb.php');
+require(dirname(__DIR__) . '/vendor/autoload.php');
 
 $objects = array(
     'Monipdb' => '\larryli\monipdb\Monipdb',
+    'CachedMonipdb' => '\larryli\monipdb\CachedMonipdb',
+    'DirectMonipdb' => '\larryli\monipdb\DirectMonipdb',
 );
 $files = array(
     'DatX' => array(dirname(__DIR__) . '/17monipdb.datx', true),
@@ -18,13 +20,16 @@ foreach ($objects as $object => $class) {
 
         try {
             $monipdb = new $class($params[0], $params[1]);
-            echo "[MEMORY] Load: " . memory_get_usage() . "\n";
+            echo "[MEMORY]  Load: " . memory_get_usage() . "\n";
 
             echo "[COUNT] Count: " . count($monipdb) . "\n";
 
+            $n = 0;
             foreach ($monipdb as $ip => $name) {
-                echo "[FOREACH] {$ip}: $name\n";
-                break;
+                if ($n % 100000 == 0) {
+                    echo "[FOREACH] {$ip}: $name\n";
+                }
+                $n++;
             }
 
             echo "[GET] 202.103.24.68: {$monipdb['202.103.24.68']}\n";
@@ -32,6 +37,7 @@ foreach ($objects as $object => $class) {
             $ip = ip2long('202.96.134.133');
             echo "[GET] 3395323525: {$monipdb[3395323525]}\n";
 
+            echo "[MEMORY]   End: " . memory_get_usage() . "\n";
             unset($monipdb);
         } catch (Exception $e) {
             die($e);

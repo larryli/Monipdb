@@ -3,15 +3,15 @@
 namespace larryli\monipdb;
 
 /**
- * Class Monipdb
+ * Class DirectMonipdb
  * @package larryli\monipdb
  */
-class Monipdb extends BaseMonipdb
+class DirectMonipdb extends BaseMonipdb
 {
     /**
-     * @var string
+     * @var resource
      */
-    protected $data;
+    protected $file;
 
     /**
      * @param string $path is file path
@@ -20,9 +20,15 @@ class Monipdb extends BaseMonipdb
      */
     public function __construct($path, $isDatX = true)
     {
-        $file = $this->load($path, $isDatX);
-        $this->data = fread($file, fstat($file)['size'] - 4);
-        fclose($file);
+        $this->file = $this->load($path, $isDatX);
+    }
+
+    /**
+     *
+     */
+    public function __destruct()
+    {
+        fclose($this->file);
     }
 
     /**
@@ -32,6 +38,7 @@ class Monipdb extends BaseMonipdb
      */
     protected function read($offset, $len)
     {
-        return substr($this->data, $offset, $len);
+        fseek($this->file, $offset + 4);
+        return fread($this->file, $len);
     }
 }

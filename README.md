@@ -30,7 +30,11 @@ for foreach ($monipdb as $ip => $name) {
 }
 ```
 
-示例请参考 [example](example/monipdb.php) 文件。
+默认的 `\larryli\monipdb\Monipdb` 将会把数据文件一次性读入内存，
+`\larryli\monipdb\CachedMonipdb` 在上述基础上使用内存缓存部分数据，以利于一次请求中多次重复查询；
+`\larryli\monipdb\DirectMonipdb` 则不缓存内存数据，每个查询都会直接从数据文件中读取数据。 
+
+具体请参考 [example](example/monipdb.php) 文件。
 
 ## 免费下载数据库
 
