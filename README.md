@@ -32,7 +32,8 @@ for foreach ($monipdb as $ip => $name) {
 
 默认的 `\larryli\monipdb\Monipdb` 将会把数据文件一次性读入内存，
 `\larryli\monipdb\CachedMonipdb` 在上述基础上使用内存缓存部分数据，以利于一次请求中多次重复查询；
-`\larryli\monipdb\DirectMonipdb` 则不缓存内存数据，每个查询都会直接从数据文件中读取数据。 
+`\larryli\monipdb\DirectMonipdb` 则不缓存内存数据，每个查询都会直接从数据文件中读取数据，
+`\larryli\monipdb\CachedDirectMonipdb` 在上述基础上使用内存缓存重复查询的数据。
 
 具体请参考 [example](example/monipdb.php) 文件。
 
@@ -41,3 +42,8 @@ for foreach ($monipdb as $ip => $name) {
 需要[注册账号](https://user.ipip.net/register.html)[登录](https://user.ipip.net/login.html)后下载。
 
 下载地址: https://www.ipip.net/free_download/
+
+## 自定义
+
+Ip 数据库主要业务逻辑均在 `\larryli\monipdb\MonipdbTrait` 中实现，可以直接在相关自定义类中直接使用。
+比如在 [Yii2 框架](https://www.yiiframework.com)中使用[组件包装](Yii2.md)。

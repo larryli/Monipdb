@@ -6,8 +6,10 @@ namespace larryli\monipdb;
  * Class Monipdb
  * @package larryli\monipdb
  */
-class Monipdb extends BaseMonipdb
+class Monipdb implements \ArrayAccess, \Countable, \Iterator
 {
+    use MonipdbTrait;
+
     /**
      * @var string
      */

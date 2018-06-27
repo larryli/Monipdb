@@ -1,10 +1,11 @@
 <?php
 
 //require(dirname(__DIR__) . '/vendor/autoload.php');
-require(dirname(__DIR__) . '/src/BaseMonipdb.php');
+require(dirname(__DIR__) . '/src/MonipdbTrait.php');
 require(dirname(__DIR__) . '/src/Monipdb.php');
 require(dirname(__DIR__) . '/src/CachedMonipdb.php');
 require(dirname(__DIR__) . '/src/DirectMonipdb.php');
+require(dirname(__DIR__) . '/src/CachedDirectMonipdb.php');
 
 function info($title, $start = false)
 {
@@ -22,6 +23,7 @@ $objects = array(
     'Monipdb' => '\larryli\monipdb\Monipdb',
     'CachedMonipdb' => '\larryli\monipdb\CachedMonipdb',
     'DirectMonipdb' => '\larryli\monipdb\DirectMonipdb',
+    'CachedDirectMonipdb' => '\larryli\monipdb\CachedDirectMonipdb',
 );
 $files = array(
     'DatX' => array(dirname(__DIR__) . '/17monipdb.datx', true),
