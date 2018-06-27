@@ -82,6 +82,7 @@ abstract class BaseMonipdbTest extends TestCase
     public function testFind()
     {
         $this->assertEquals("中国\t湖北\t武汉\t", $this->monipdb['202.103.24.68']);
+        $this->assertEquals("中国\t湖北\t武汉\t", $this->monipdb['202.103.24.68']); // cached
         $this->assertEquals("中国\t广东\t深圳\t", $this->monipdb[3395323525]);
         $this->assertEquals(false, $this->monipdb[-1]);
     }
