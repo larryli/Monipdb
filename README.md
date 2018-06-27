@@ -10,6 +10,8 @@ $monipdb = new \larryli\monipdb\Monipdb('17monipdb.datx');
 echo "202.103.24.68: {$monipdb['202.103.24.68']}\n";
 
 // dump
+echo count($monipdb) . "\n";
+
 for foreach ($monipdb as $ip => $name) {
     echo "{$ip}: $name\n";
 }
