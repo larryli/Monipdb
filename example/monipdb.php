@@ -58,6 +58,7 @@ foreach ($objects as $object => $class) {
             $n = 0;
             foreach ($monipdb as $ip => $name) {
                 if ($n % 100000 == 0) {
+                    $ip = long2ip($ip);
                     echo "[FOREACH] {$ip}: $name\n";
                 }
                 $n++;
