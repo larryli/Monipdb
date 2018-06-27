@@ -13,13 +13,9 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
      */
     protected $isDatX;
     /**
-     * @var array
+     * @var string
      */
     protected $data;
-    /**
-     * @var string[]
-     */
-    protected $string;
     /**
      * @var int
      */
@@ -40,6 +36,10 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
      * @var int
      */
     protected $end = 0;
+    /**
+     * @var
+     */
+    protected $func;
 
     /**
      * @param string $path is file path
@@ -54,37 +54,32 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
         }
         $file = fopen($path, 'rb');
         if (!is_resource($file)) {
+            // @codeCoverageIgnoreStart
             throw new \Exception("{$path} fopen failed.");
+            // @codeCoverageIgnoreEnd
         }
         if ($this->isDatX) {
-            $func = function ($dat, $n) {
-                return unpack('nlen', $dat[$n + 7] . $dat[$n + 8]);
+            $this->func = function ($n) {
+                return unpack('nlen', $this->data[$n + 7] . $this->data[$n + 8]);
             };
         } else {
             $this->step = 8;
             $this->index = 1024;
-            $func = function ($dat, $n) {
-                return unpack('Clen', $dat[$n + 7]);
+            $this->func = function ($n) {
+                return unpack('Clen', $this->data[$n + 7]);
             };
         }
         $offset = unpack('Nlen', fread($file, 4));
         $this->offset = $offset['len'] - $this->index;
         if ($this->offset < 4) {
+            // @codeCoverageIgnoreStart
             throw new \Exception("{$path} is invalid.");
+            // @codeCoverageIgnoreEnd
         }
         $this->end = $this->offset - 4;
-        $this->data = fread($file, $this->end);
-        $this->rewind();
-        $this->string = [];
-        for ($start = $this->index; $start < $this->end; $start += $this->step) {
-            $off = unpack('Vlen', substr($this->data, $start + 4, 3) . "\x0");
-            if (!isset($this->string[$off['len']])) {
-                $len = call_user_func($func, $this->data, $start);
-                fseek($file, $this->offset + $off['len']);
-                $this->string[$off['len']] = fread($file, $len['len']);
-            }
-        }
+        $this->data = fread($file, fstat($file)['size'] - 4);
         fclose($file);
+        $this->rewind();
     }
 
     /**
@@ -192,14 +187,10 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
             return false;
         }
 
-        $ip_start2 = intval(floor($ip / (256 * 256)));
-        $ip_start = intval(floor($ip_start2 / 256));
-        if ($ip_start < 0 || $ip_start > 255) {
-            return false;
-        }
+        $ip_start = intval(floor($ip / (256 * 256)));
 
         $nip = pack('N', $ip);
-        $tmp_offset = ($this->isDatX ? $ip_start2 : $ip_start) * 4;
+        $tmp_offset = ($this->isDatX ? $ip_start : intval(floor($ip_start / 256))) * 4;
         $start = unpack('Vlen', substr($this->data, $tmp_offset, 4));
 
         for ($start = $start['len'] * $this->step + $this->index; $start < $this->end; $start += $this->step) {
@@ -208,7 +199,9 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
                 return $this->string($start);
             }
         }
+        // @codeCoverageIgnoreStart
         return false;
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -250,12 +243,12 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
      */
     protected function ip($ip)
     {
-        if (is_string($ip)) {
-            return ip2long($ip);
-        } else if (is_int($ip)) {
+        if (is_int($ip)) {
             if ($ip > 0 && $ip < 4294967295) {
                 return $ip;
             }
+        } else if (is_string($ip)) {
+            return ip2long($ip);
         }
         return false;
     }
@@ -267,6 +260,7 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
     protected function string($start)
     {
         $off = unpack('Vlen', substr($this->data, $start + 4, 3) . "\x0");
-        return isset($this->string[$off['len']]) ? $this->string[$off['len']] : false;
+        $len = call_user_func($this->func, $start);
+        return substr($this->data, $this->offset + $off['len'] - 4, $len['len']);
     }
 }
