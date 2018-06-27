@@ -37,9 +37,10 @@ class Monipdb extends Component implements \ArrayAccess, \Countable, \Iterator
      * @var array
      */
     protected $cached = [];
-    
+
     /**
      * @inheritdoc
+     * @throws InvalidConfigException
      */
     public function init()
     {
@@ -65,6 +66,16 @@ class Monipdb extends Component implements \ArrayAccess, \Countable, \Iterator
             $this->cached[$offset] = static::traitOffsetGet($offset);
         }
         return $this->cached[$offset];
+    }
+
+    /**
+     * @param $ip
+     * @return string
+     * @deprecated
+     */
+    public function find($ip)
+    {
+        return $this->offsetGet($ip);
     }
 
     /**
