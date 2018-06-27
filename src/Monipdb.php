@@ -113,7 +113,7 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
     public function key()
     {
         $ip = unpack('Nlen', substr($this->data, $this->position, 4));
-        return long2ip($ip['len']);
+        return $ip['len'];
     }
 
     /**

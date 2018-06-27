@@ -15,6 +15,7 @@ echo "[MEMORY] DatX: " . memory_get_usage() . "\n";
 echo "Count: " . count($monipdb) . "\n";
 
 foreach ($monipdb as $ip => $name) {
+    $ip = long2ip($ip);
     echo "{$ip}: $name\n";
     break;
 }
@@ -39,6 +40,7 @@ echo "[MEMORY] Dat: " . memory_get_usage() . "\n";
 echo "Count: " . count($monipdb) . "\n";
 
 foreach ($monipdb as $ip => $name) {
+    $ip = long2ip($ip);
     echo "{$ip}: $name\n";
     break;
 }
