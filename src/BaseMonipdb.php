@@ -75,7 +75,7 @@ abstract class BaseMonipdb implements \ArrayAccess, \Countable, \Iterator
     public function key()
     {
         $ip = unpack('Nlen', $this->read($this->position, 4));
-        return long2ip($ip['len']);
+        return $ip['len'];
     }
 
     /**
