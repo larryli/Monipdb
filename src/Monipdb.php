@@ -37,7 +37,7 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
      */
     protected $end = 0;
     /**
-     * @var
+     * @var \Closure
      */
     protected $func;
 
@@ -260,7 +260,9 @@ class Monipdb implements \ArrayAccess, \Countable, \Iterator
     protected function string($start)
     {
         $off = unpack('Vlen', substr($this->data, $start + 4, 3) . "\x0");
-        $len = call_user_func($this->func, $start);
+        /** @see https://stackoverflow.com/questions/7067536/how-to-call-a-closure-that-is-a-class-variable */
+        $func = $this->func;
+        $len = $func($start);
         return substr($this->data, $this->offset + $off['len'] - 4, $len['len']);
     }
 }
