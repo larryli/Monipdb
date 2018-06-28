@@ -264,7 +264,7 @@ trait MonipdbTrait
     protected function string($start)
     {
         $off = unpack('Vlen', $this->read($start + 4, 3) . "\x0");
-        $len = call_user_func($this->func, $start);
+        $len = ($this->func)($start);
         return $this->read($this->offset + $off['len'] - 4, $len['len']);
     }
 }
