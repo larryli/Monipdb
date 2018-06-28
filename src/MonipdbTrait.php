@@ -40,7 +40,7 @@ trait MonipdbTrait
      */
     protected $end = 0;
     /**
-     * @var
+     * @var \Closure
      */
     protected $func;
 
@@ -264,7 +264,9 @@ trait MonipdbTrait
     protected function string($start)
     {
         $off = unpack('Vlen', $this->read($start + 4, 3) . "\x0");
-        $len = ($this->func)($start);
+        /** @see https://stackoverflow.com/questions/7067536/how-to-call-a-closure-that-is-a-class-variable */
+        $func = $this->func;
+        $len = $func($start);
         return $this->read($this->offset + $off['len'] - 4, $len['len']);
     }
 }
