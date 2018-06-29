@@ -8,7 +8,6 @@
         processIsolation="false"
         stopOnFailure="false"
         stopOnError="false"
-        stopOnIncoplete="false"
         stopOnSkipped="false"
 >
     <testsuites>

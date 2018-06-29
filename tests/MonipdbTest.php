@@ -3,12 +3,13 @@
 namespace larryli\monipdb\tests;
 
 use larryli\monipdb\Monipdb;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class MonipdbTest
  * @package larryli\monipdb\tests
  */
-class MonipdbTest extends \PHPUnit_Framework_TestCase
+class MonipdbTest extends TestCase
 {
     protected $monipdb;
 
