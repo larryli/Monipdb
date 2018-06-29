@@ -15,6 +15,6 @@ class MonipdbDatTest extends BaseMonipdbTest
      */
     protected function setUp()
     {
-        $this->monipdb = new Monipdb(dirname(__DIR__) . '/17monipdb.dat', false);
+        $this->monipdb = new Monipdb(__DIR__ . '/17monipdb.dat', false);
     }
 }

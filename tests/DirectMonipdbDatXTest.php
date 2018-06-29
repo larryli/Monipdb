@@ -15,7 +15,7 @@ class DirectMonipdbDatXTest extends BaseMonipdbTest
      */
     protected function setUp()
     {
-        $this->monipdb = new DirectMonipdb(dirname(__DIR__) . '/17monipdb.datx');
+        $this->monipdb = new DirectMonipdb(__DIR__ . '/17monipdb.datx');
     }
 
     /**

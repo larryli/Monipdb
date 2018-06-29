@@ -15,6 +15,6 @@ class CachedMonipdbDatTest extends BaseMonipdbTest
      */
     protected function setUp()
     {
-        $this->monipdb = new CachedMonipdb(dirname(__DIR__) . '/17monipdb.dat', false);
+        $this->monipdb = new CachedMonipdb(__DIR__ . '/17monipdb.dat', false);
     }
 }

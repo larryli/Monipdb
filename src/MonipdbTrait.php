@@ -248,7 +248,7 @@ trait MonipdbTrait
     protected function ip($ip)
     {
         if (is_int($ip)) {
-            if ($ip > 0 && $ip < 4294967295) {
+            if ($ip > 0 && $ip < 4294967296) {
                 return $ip;
             }
         } else if (is_string($ip)) {
