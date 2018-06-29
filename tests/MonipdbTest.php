@@ -12,14 +12,20 @@ class MonipdbTest extends \PHPUnit_Framework_TestCase
 {
     protected $monipdb;
 
+    /**
+     * @throws \Exception
+     */
     protected function up()
     {
-        $this->monipdb = new Monipdb(dirname(__DIR__) . '/17monipdb.datx');
+        $this->monipdb = new Monipdb(__DIR__ . '/17monipdb.datx');
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function old()
     {
-        $this->monipdb = new Monipdb(dirname(__DIR__) . '/17monipdb.dat', false);
+        $this->monipdb = new Monipdb(__DIR__ . '/17monipdb.dat', false);
     }
 
     /**
@@ -48,12 +54,18 @@ class MonipdbTest extends \PHPUnit_Framework_TestCase
         unset($this->monipdb[0]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testCount()
     {
         $this->up();
         $this->assertNotEquals(0, count($this->monipdb));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testForeach()
     {
         $this->up();
@@ -61,9 +73,7 @@ class MonipdbTest extends \PHPUnit_Framework_TestCase
         $count = 0;
         foreach ($this->monipdb as $ip => $string) {
             $count++;
-            if ($count % 5000 == 0) {
-                $tests[$ip] = $string;
-            }
+            $tests[$ip] = $string;
         }
         $this->assertEquals($count, count($this->monipdb));
         foreach ($tests as $ip => $string) {
@@ -71,6 +81,9 @@ class MonipdbTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testExists()
     {
         $this->up();
@@ -78,6 +91,9 @@ class MonipdbTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, isset($this->monipdb[-1]));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testFind()
     {
         $this->up();
@@ -86,12 +102,18 @@ class MonipdbTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $this->monipdb[-1]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testCountOld()
     {
         $this->old();
         $this->assertNotEquals(0, count($this->monipdb));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testFindOld()
     {
         $this->old();
@@ -99,6 +121,9 @@ class MonipdbTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("中国\t广东\t深圳\t", $this->monipdb[3395323525]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testForeachOld()
     {
         $this->old();
