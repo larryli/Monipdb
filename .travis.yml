@@ -17,6 +17,6 @@ matrix:
 
 sudo: false
 
-before_script: composer install --no-dev -n
+before_script: composer install
 
 script: vendor/bin/phpunit
