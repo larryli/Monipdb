@@ -54,12 +54,9 @@ abstract class BaseMonipdbTest extends TestCase
     {
         $tests = [];
         $count = 0;
-        $max = floor(count($this->monipdb) / 10);
         foreach ($this->monipdb as $ip => $string) {
             $count++;
-            if (rand(0, $max) == 0) {
-                $tests[$ip] = $string;
-            }
+            $tests[$ip] = $string;
         }
         $this->assertEquals($count, count($this->monipdb));
         foreach ($tests as $ip => $string) {
