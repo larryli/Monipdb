@@ -46,7 +46,7 @@ foreach ($objects as $object => $class) {
             echo "[GET] 3395323525: {$monipdb[3395323525]}\n";
 
             $benchmark = array();
-            for ($n = 0; $n < 1000; $n++) {
+            for ($n = 0; $n < 10000; $n++) {
                 $benchmark[] = $monipdb['202.103.24.68'];
             }
             echo "[BENCHMARK] 202.103.24.68: {$benchmark[0]}\n";
