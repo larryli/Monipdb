@@ -54,7 +54,7 @@ Ip 数据库主要业务逻辑均在 `\larryli\monipdb\MonipdbTrait` 中实现�
 对于基本使用，可以使用：
 
 ```shell
-composer require larryli/monipdb ^1.0
+composer require larryli/monipdb ~1.0
 ```
 
 以获得更好的执行性能。
