@@ -6,6 +6,7 @@
 [![Total Downloads](https://poser.pugx.org/larryli/monipdb/downloads)](https://packagist.org/packages/larryli/monipdb)
 [![Latest Unstable Version](https://poser.pugx.org/larryli/monipdb/v/unstable)](https://packagist.org/packages/larryli/monipdb)
 [![License](https://poser.pugx.org/larryli/monipdb/license)](https://packagist.org/packages/larryli/monipdb)
+[![Build Status](https://travis-ci.org/larryli/Monipdb.svg?branch=bugfix/2.0)](https://travis-ci.org/larryli/Monipdb)
 
 ## 使用方法
 
